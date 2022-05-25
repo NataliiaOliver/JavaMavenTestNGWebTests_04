@@ -7,13 +7,6 @@ import org.testng.annotations.Test;
 
 public class WebTest {
 
-    //Тест кейс:
-    //1. Открыть страницу http://www.99-bottles-of-beer.net/
-    //2. Нажать пункт меню BrowseLanguages
-    //3. Нажать пункт меню Start
-    //4. Подтвердить, что пользователь видит заголовок Welcome to 99 Bottles of Beer
-    //5. Закрыть браузер
-
     @Test
     public void testMenuStartTitle() throws InterruptedException {
 
@@ -31,17 +24,14 @@ public class WebTest {
                 By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='menu']/li/a[@href='/abc.html']")
         );
         menuBrowseLanguages.click();
-        //sleep(1000);
 
         WebElement menuStart = driver.findElement(
                 By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='menu']/li/a[@href='/']")
         );
         menuStart.click();
-        //sleep(1000);
 
         WebElement h2 = driver.findElement(By.xpath("//body/div[@id='wrap']/div[@id='main']/h2"));
         String actualResult = h2.getText();
-        //sleep(2000);
 
         Assert.assertEquals(actualResult, expectedResult);
 

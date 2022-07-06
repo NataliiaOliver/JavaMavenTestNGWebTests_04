@@ -132,4 +132,42 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testNamesSiteCreators() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String[] expectedResult = {"Oliver Schade", "Gregor Scheithauer", "Stefan Scheler"};
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement submenuTeam = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a[@href='team.html']")
+        );
+        submenuTeam.click();
+
+        String[] actualResult = new String[3];
+
+        WebElement firstCreatorName = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[text()='Oliver Schade']")
+        );
+        actualResult[0] = firstCreatorName.getText();
+        WebElement secondCreatorName = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[text()='Gregor Scheithauer']")
+        );
+        actualResult[1] = secondCreatorName.getText();
+        WebElement thirdCreatorName = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[text()='Stefan Scheler']")
+        );
+        actualResult[2] = thirdCreatorName.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

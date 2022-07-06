@@ -109,4 +109,27 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void test0_9() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/abc.html";
+        String expectedResult = "0-9";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement submenu0_9 = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a[@href='0.html']")
+        );
+        String actualResult = submenu0_9.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

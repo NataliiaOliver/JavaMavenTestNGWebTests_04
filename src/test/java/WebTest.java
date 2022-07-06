@@ -196,4 +196,38 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testPrivacyEmailOliverSchade() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String[] expectedResult = {"Oliver Schade", "os@ls-la.net"};
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement submenuPrivacy = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a[@href='impressum.html']")
+        );
+        submenuPrivacy.click();
+
+        String[] actualResult = new String[2];
+
+        WebElement siteCreatorOliverSchade = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/h3[text()='Oliver Schade']")
+        );
+        actualResult[0] = siteCreatorOliverSchade.getText();
+        WebElement emailOliverSchade = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/p[text()='os@ls-la.net']")
+        );
+        actualResult[1] = emailOliverSchade.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

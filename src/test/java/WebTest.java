@@ -170,4 +170,30 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testLyricsSong99BottlesOfBeer() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResult = "Lyrics of the song 99 Bottles of Beer";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement submenuSongLyrics = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li/a[@href='lyrics.html']")
+        );
+        submenuSongLyrics.click();
+
+        WebElement lyricsSong99BottlesOfBeer = driver.findElement(By.xpath("//body/div[@id='wrap']/div[@id='main']/h2"));
+        String actualResult = lyricsSong99BottlesOfBeer.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

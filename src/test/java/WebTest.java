@@ -230,4 +230,32 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testNewComments() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResult = "New Comments";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement menuTopLists = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='menu']/li/a[@href='/toplist.html']")
+        );
+        menuTopLists.click();
+
+        WebElement submenuNewComments = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='submenu']/li[last()]")
+        );
+        String actualResult = submenuNewComments.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

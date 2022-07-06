@@ -304,4 +304,30 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testSubmitLanguage() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult = "Error: Precondition failed - Incomplete Input.";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement buttonSubmitLanguage = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/form[@id='addlanguage']/p/input[@type='submit']")
+        );
+        buttonSubmitLanguage.click();
+
+        WebElement emptyFieldsError = driver.findElement(By.xpath("//body/div[@id='wrap']/div[@id='main']/p[@style]"));
+        String actualResult = emptyFieldsError.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

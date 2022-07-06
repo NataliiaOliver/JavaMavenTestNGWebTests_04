@@ -258,4 +258,50 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testFooterMenu() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String[] expectedResult = {"Start", "Browse Languages", "Search Languages", "Top Lists", "Guestbook",
+                "Submit new Language"};
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        String[] actualResult = new String[6];
+
+        WebElement footerMenuStart = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='footer']/p/a[@href='/']")
+        );
+        actualResult[0] = footerMenuStart.getText();
+        WebElement footerMenuBrowseLanguages= driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='footer']/p/a[@href='/abc.html']")
+        );
+        actualResult[1] = footerMenuBrowseLanguages.getText();
+        WebElement footerSearchLanguages = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='footer']/p/a[@href='/search.html']")
+        );
+        actualResult[2] = footerSearchLanguages.getText();
+        WebElement footerMenuTopLists = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='footer']/p/a[@href='/toplist.html']")
+        );
+        actualResult[3] = footerMenuTopLists.getText();
+        WebElement footerMenuGuestbook = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='footer']/p/a[@href='/guestbookv2.html']")
+        );
+        actualResult[4] = footerMenuGuestbook.getText();
+        WebElement footerMenuSubmitNewLanguage = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='footer']/p/a[@href='/submitnewlanguage.html']")
+        );
+        actualResult[5] = footerMenuSubmitNewLanguage.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

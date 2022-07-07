@@ -430,4 +430,42 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testStyleImportant() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResultStyle = "background-color: red; color: white;";
+        String expectedResultBold = "b";
+        //String expectedResultBold = "700";
+        String expectedResultCapital = "IMPORTANT:";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement submitNewLanguage = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='menu']/li/a[@href='/submitnewlanguage.html']")
+        );
+        submitNewLanguage.click();
+
+        WebElement importantStyle = driver.findElement(By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span"));
+        String actualResultStyle = importantStyle.getAttribute("style");
+
+        WebElement importantBold = driver.findElement(By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span/b"));
+        String actualResultBold = importantBold.getTagName();
+        //String actualResultBold = importantBolt.getCssValue("font-weight");
+
+        WebElement importantCapital = driver.findElement(By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span/b"));
+        String actualResultCapital = importantCapital.getText();
+
+        Assert.assertEquals(actualResultStyle, expectedResultStyle);
+        Assert.assertEquals(actualResultBold, expectedResultBold);
+        Assert.assertEquals(actualResultCapital, expectedResultCapital.toUpperCase());
+
+        driver.quit();
+    }
 }

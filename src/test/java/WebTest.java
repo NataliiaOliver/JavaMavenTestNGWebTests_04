@@ -330,4 +330,43 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testSubmitLanguage2() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult1 = "Error";
+        String expectedResult2 = "Precondition";
+        String expectedResult3 = "Incomplete";
+        String expectedResult4 = "Input";
+        String expectedResult5 = "failed";
+        String expectedResult6 = ":";
+        String expectedResult7 = "-";
+        String expectedResult8 = ".";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        driver.findElement(By.xpath("//input[@type='submit']")).click();
+
+        WebElement checkingSpellingErrorText = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/p[@style]")
+        );
+        String actualResult1 = checkingSpellingErrorText.getText().substring(0, 5);
+
+        Assert.assertEquals(actualResult1, expectedResult1);
+        Assert.assertEquals(checkingSpellingErrorText.getText().substring(7, 19), expectedResult2);
+        Assert.assertEquals(checkingSpellingErrorText.getText().substring(29, 39), expectedResult3);
+        Assert.assertEquals(checkingSpellingErrorText.getText().substring(40, 45), expectedResult4);
+        Assert.assertEquals(checkingSpellingErrorText.getText().substring(20, 26), expectedResult5);
+        Assert.assertEquals(checkingSpellingErrorText.getText().substring(5, 6), expectedResult6);
+        Assert.assertEquals(checkingSpellingErrorText.getText().substring(27, 28), expectedResult7);
+        Assert.assertEquals(checkingSpellingErrorText.getText().substring(45), expectedResult8);
+
+        driver.quit();
+    }
 }

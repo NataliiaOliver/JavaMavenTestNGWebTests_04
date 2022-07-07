@@ -2,6 +2,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.Color;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -465,6 +466,41 @@ public class WebTest {
         Assert.assertEquals(actualResultStyle, expectedResultStyle);
         Assert.assertEquals(actualResultBold, expectedResultBold);
         Assert.assertEquals(actualResultCapital, expectedResultCapital.toUpperCase());
+
+        driver.quit();
+    }
+
+    @Test
+    public void testStyleImportantV2() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResultImportant = "IMPORTANT:";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        String actualResultBold = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span[@style='background-color:red; color: white']/b")
+        ).getTagName();
+        Assert.assertEquals(actualResultBold, "b");
+
+        WebElement important = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li/span[@style='background-color:red; color: white']")
+        );
+        String actualResultImportant = important.getText();
+        Assert.assertEquals(actualResultImportant, expectedResultImportant.toUpperCase());
+
+        String backgroundColor = important.getCssValue("background-color");
+        //System.out.println(colorString); // rgba(255, 0, 0, 1) == #ff0000 == red
+        Assert.assertTrue(Color.fromString("#ff0000").equals(Color.fromString(backgroundColor)));
+
+        String color = important.getCssValue("color");
+        System.out.println(color); // rgba(255, 255, 255, 1) == #ffffff == white
+        Assert.assertTrue(Color.fromString("#ffffff").equals(Color.fromString(color)));
 
         driver.quit();
     }

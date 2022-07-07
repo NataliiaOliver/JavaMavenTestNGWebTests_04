@@ -369,4 +369,30 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testImportantText() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        String expectedResult = "IMPORTANT: Take your time! The more carefully you fill out this form (especially the"
+                + " language name and description), the easier it will be for us and the faster your language will show"
+                + " up on this page. We don't have the time to mess around with fixing your descriptions etc. Thanks for"
+                + " your understanding.";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement importantText = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/ul/li[1]")
+        );
+        String actualResult = importantText.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }

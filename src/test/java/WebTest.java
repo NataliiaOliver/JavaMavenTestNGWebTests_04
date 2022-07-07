@@ -395,4 +395,39 @@ public class WebTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testBrowseLanguages() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        String url = "http://www.99-bottles-of-beer.net/";
+        String expectedResult1 = "Language";
+        String expectedResult2 = "Author";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(url);
+
+        WebElement menuBrowseLanguages = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='navigation']/ul[@id='menu']/li/a[@href='/abc.html']")
+        );
+        menuBrowseLanguages.click();
+
+        WebElement language = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/table[@id='category']/tbody/tr/th[text()='Language']")
+        );
+        String actualResult1 = language.getText();
+
+        WebElement author = driver.findElement(
+                By.xpath("//body/div[@id='wrap']/div[@id='main']/table[@id='category']/tbody/tr/th[text()='Author']")
+        );
+        String actualResult2 = author.getText();
+
+        Assert.assertEquals(actualResult1, expectedResult1);
+        Assert.assertEquals(actualResult2, expectedResult2);
+
+        driver.quit();
+    }
 }

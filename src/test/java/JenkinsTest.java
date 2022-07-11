@@ -107,5 +107,26 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testBROWSE_LANGUAGES_M() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        String expectedResult = "MySQL";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath(BROWSE_LANGUAGE)).click();
+        driver.findElement(By.xpath("//a[@href='m.html']")).click();
+        String actualResult = driver.findElement(By.xpath("//tr[last()]/td/a")).getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }
 

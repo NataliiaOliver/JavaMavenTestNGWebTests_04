@@ -10,6 +10,7 @@ import java.util.List;
 public class JenkinsTest {
 
     private static final String BASE_URL = "http://99-bottles-of-beer.net/lyrics.html";
+    private static final String BROWSE_LANGUAGE = "//ul[@id='menu']/li/a[@href='/abc.html']";
 
     private void getBottles(StringBuilder songLyrics, int number, String btl) {
         songLyrics.append(number).append(btl);
@@ -82,6 +83,27 @@ public class JenkinsTest {
         }
 
         Assert.assertEquals(actualResult.toString(), expectedResult);
+
+        driver.quit();
+    }
+
+    @Test
+    public void testBROWSE_LANGUAGES_J() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        String expectedResult = "All languages starting with the letter J are shown, sorted by Language.";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath(BROWSE_LANGUAGE)).click();
+        driver.findElement(By.xpath("//a[@href='j.html']")).click();
+        String actualResult = driver.findElement(By.xpath("//div[@id='main']/p[text()]")).getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
 
         driver.quit();
     }

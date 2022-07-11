@@ -219,5 +219,37 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testSignGuestbook() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        String expectedResult = "Error: Error: Invalid security code.";
+
+        String random = "" + ((int) (Math.random() * 900) + 100);
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath("//a[@href='/guestbookv2.html']")).click();
+        driver.findElement(By.xpath("//a[@href='./signv2.html']")).click();
+        driver.findElement(By.xpath("//input[@name='name']")).sendKeys("Nataliia");
+        driver.findElement(By.xpath("//input[@name='location']")).sendKeys("Louisiana");
+        driver.findElement(By.xpath("//input[@name='email']")).sendKeys("psvnatali@gmail.com");
+        driver.findElement(By.xpath("//input[@name='homepage']")).sendKeys("lagoldgymnastics.com");
+        driver.findElement(By.xpath("//input[@name='captcha']")).sendKeys(random);
+        driver.findElement(By.xpath("//textarea[@name='comment']")).sendKeys("test message");
+        driver.findElement(By.xpath("//input[@type='submit']")).click();
+
+        String actualResult = driver.findElement(By.xpath("//div[@id='main']/p[contains(text(),' Error: Invalid security code.')]"))
+                .getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }
 

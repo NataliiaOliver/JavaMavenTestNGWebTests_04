@@ -128,5 +128,30 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testBROWSE_LANGUAGES_TablesHeaders() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath(BROWSE_LANGUAGE)).click();
+        String[] expectedResult = {"Language", "Author", "Date", "Comments", "Rate"};
+
+        String[] actualResult = new String[5];
+        for (int i = 0; i < actualResult.length; i++) {
+            int index = i + 1;
+            actualResult[i] = driver
+                    .findElement(By.xpath("//tbody/tr/th[" + index + "]"))
+                    .getText();
+        }
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }
 

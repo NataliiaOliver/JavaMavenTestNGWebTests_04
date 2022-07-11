@@ -198,5 +198,26 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testTenLanguageStartNumbers() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        int expectedResult = 10;
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath(BROWSE_LANGUAGE)).click();
+        driver.findElement(By.xpath("//a[@href='0.html']")).click();
+        int actualResult = driver.findElements(By.xpath("//tbody/tr/td/a")).size();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }
 

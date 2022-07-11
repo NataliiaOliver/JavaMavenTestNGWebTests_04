@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JenkinsTest {
@@ -150,6 +151,50 @@ public class JenkinsTest {
         }
 
         Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
+
+    @Test
+    public void testMathematicaLanguage() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        String expectedResultLanguage = "Mathematica";
+        String expectedResultCreator = "Brenton Bostick";
+        String expectedResultData = "03/16/06";
+        String expectedResultComments = "1";
+
+        StringBuilder expectedResult = new StringBuilder();
+        expectedResult
+                .append(expectedResultLanguage)
+                .append(" ")
+                .append(expectedResultCreator)
+                .append(" ")
+                .append(expectedResultData)
+                .append(" ")
+                .append(expectedResultComments);
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath(BROWSE_LANGUAGE)).click();
+        driver.findElement(By.linkText("M")).click();
+
+        List<WebElement> trs = driver.findElements(By.xpath("//table[@id='category']/tbody/tr"));
+
+        List<String> actualResult = new ArrayList<>();
+
+        for (WebElement tr : trs) {
+            if (tr.getText().contains(expectedResultLanguage)) {
+                actualResult.add(tr.getText());
+            }
+        }
+
+        Assert.assertEquals(actualResult.size(), 1);
+        Assert.assertFalse(actualResult.get(0).isEmpty());
+        Assert.assertEquals(actualResult.get(0), expectedResult.toString());
 
         driver.quit();
     }

@@ -380,5 +380,28 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testVersionsOfJava() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        int expectedResult = 6;
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath(BROWSE_LANGUAGE)).click();
+        driver.findElement(By.xpath("//a[@href='j.html']")).click();
+        driver.findElement(By.xpath("//a[@href='language-java-3.html']")).click();
+        int actualResult = driver
+                .findElements(By.xpath("//table[@id='category']/tbody/tr/td/a")).size() + 1;
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }
 

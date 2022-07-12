@@ -354,5 +354,31 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testTopRealShakespeare() {
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        Boolean expectedResult = false;
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath("//ul/li/a[@href='/toplist.html']")).click();
+        driver.findElement(By.xpath("//a[@href='./toplist_real.html']")).click();
+
+        String[] result = new String[25];
+        for (int i = 1; i < result.length; i++) {
+            if (driver.findElement(By.xpath("//tr[" + i + "]")).getText().contains("Shakespeare")) {
+                expectedResult = true;
+            }
+        }
+
+        Assert.assertFalse(expectedResult);
+
+        driver.quit();
+    }
 }
 

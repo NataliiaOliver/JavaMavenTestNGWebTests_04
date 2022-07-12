@@ -403,5 +403,46 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testCommentsQuantity(){
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        String expectedResult = "object-oriented version";
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath("//li/a[@href='/abc.html']")).click();
+        driver.findElement(By.xpath("//li/a[@href='j.html']")).click();
+        driver.findElement(By.xpath("//td/a[@href='language-java-3.html']")).click();
+
+        int firstLanguage = Integer.parseInt(driver.findElement(By.xpath("//tbody/tr[2]/td[4]")).getText());
+        int secondLanguage = Integer.parseInt(driver.findElement(By.xpath("//tbody/tr[3]/td[4]")).getText());
+        int thirdLanguage = Integer.parseInt(driver.findElement(By.xpath("//tbody/tr[4]/td[4]")).getText());
+        int fourthLanguage = Integer.parseInt(driver.findElement(By.xpath("//tbody/tr[5]/td[4]")).getText());
+        int fifthLanguage = Integer.parseInt(driver.findElement(By.xpath("//tbody/tr[6]/td[4]")).getText());
+
+        driver.findElement(By.xpath("//td/a[@href='language-java-4.html']")).click();
+
+        int sixthLanguage = Integer.parseInt(driver.findElement(By.xpath("//tbody/tr[2]/td[4]")).getText());
+
+        int[] maxQuantity = new int[] {firstLanguage,secondLanguage,thirdLanguage, fourthLanguage,fifthLanguage,sixthLanguage};
+
+        int maxComments = 0;
+        for (int i = 0; i < maxQuantity.length; i++) {
+            if(maxComments <= maxQuantity[i]){
+                maxComments = maxQuantity[i];
+            }
+        }
+        String actualResult = driver.findElement(By.xpath("//table[@id='category']/tbody/tr/td[1]")).getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }
 

@@ -251,5 +251,31 @@ public class JenkinsTest {
 
         driver.quit();
     }
+
+    @Test
+    public void testBrowseLanguagesAlternativeVersions() {
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String drivePath = "C:\\Program Files\\chromedriver_win32\\chromedriver.exe";
+
+        System.setProperty(chromeDriver, drivePath);
+        WebDriver driver = new ChromeDriver();
+
+        String expectedResult = "Log in";
+
+        driver.get(BASE_URL);
+        driver.findElement(By.xpath("//ul/li/a[@href='/abc.html']")).click();
+        driver.findElement(By.xpath("//ul/li/a[@ href='j.html']")).click();
+        driver.findElement(By.xpath("//table/tbody/tr/td/a[@href='language-java-3.html']")).click();
+        driver.findElement(By.xpath("//table/tbody/tr/td/a[@href='language-java-4.html']")).click();
+        driver.findElement(By.xpath("//div[@id='voting']/p/a[@title='reddit']")).click();
+
+        String actualResult =
+                driver.findElement(By.xpath("//div[@class='Step__content']/h1")).getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+    }
 }
 
